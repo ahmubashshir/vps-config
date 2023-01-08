@@ -1,0 +1,18 @@
+#!/bin/sh
+
+if ! command -pv stow > /dev/null; then
+	cat >&2 << EOF
+ERROR: stow: command not found
+
+Install and/or ensure gnu stow in in your \$PATH
+EOF
+	exit 1
+fi
+
+if [ "$#" -eq 0 ]; then
+	cd "$(dirname "$0")"
+	echo 'Available packages:'
+	exec find -maxdepth 1 -type d -not -name '.*' -printf '\t%f\n'
+else
+	sudo stow -d "$(dirname "$0")" -t / -v1 "$@"
+fi
