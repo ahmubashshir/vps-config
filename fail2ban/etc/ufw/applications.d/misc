@@ -1,0 +1,14 @@
+[IDENTD]
+title=Identification Protocol Daemon
+description=IDENTD implements a Identification Protocol Server specified in rfc1413.
+ports=113/tcp
+
+[aria2]
+title=Aria2 Download Manager
+description=The ultra fast download utility
+ports=6881:6999/tcp|6881:6999/udp
+
+[Rsyncd]
+title=Rsync Server Daemon
+description=rsync - a fast, versatile, remote (and local) file-copying tool (rsync:// protocol server)
+ports=873/tcp
