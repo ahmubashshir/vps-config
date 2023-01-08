@@ -8,11 +8,12 @@ Install and/or ensure gnu stow in in your \$PATH
 EOF
 	exit 1
 fi
-
+STOW_DIR="$(dirname "$(realpath "$0")")"
 if [ "$#" -eq 0 ]; then
-	cd "$(dirname "$0")"
-	echo 'Available packages:'
+	cd "$STOW_DIR"
+	[ "${STOW_DIR#$HOME}" = "$STOW_DIR" ] || STOW_DIR_REPR="~${STOW_DIR#$HOME}"
+	echo "Available packages: ${STOW_DIR_REPR-$STOW_DIR}"
 	exec find -maxdepth 1 -type d -not -name '.*' -printf '\t%f\n'
 else
-	sudo stow -d "$(dirname "$0")" -t / -v1 "$@"
+	sudo stow -d "$STOW_DIR" -t / -v1 "$@"
 fi
