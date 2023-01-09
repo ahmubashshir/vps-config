@@ -1,0 +1,9 @@
+# /etc/systemd/system/ping-or-reboot.service
+[Unit]
+Description=Reboot on ping failure
+FailureAction=reboot
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/curl --disable --silent --max-time 2.5 --retry 3 https://cors.eu.org/https://%H -o /dev/null
+Restart=no
