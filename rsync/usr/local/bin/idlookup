@@ -1,0 +1,11 @@
+#!/bin/sh
+while read -r task arg;do
+	arg=$(echo "$arg"| sed 's/[^[:alnum:].-]//g')
+	case "$task" in
+		uid) id -un -- "$arg";;
+		usr) id -ur -- "$arg";;
+		gid) id -gn -- "$arg";;
+		grp) id -gr -- "$arg";;
+		*) :;;
+	esac
+done
