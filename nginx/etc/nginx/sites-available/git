@@ -1,0 +1,23 @@
+	location @cgit {
+		include          fastcgi_params;
+		fastcgi_param    SCRIPT_FILENAME /usr/lib/cgit/cgit.cgi;
+		fastcgi_param    DOCUMENT_ROOT   /usr/lib/git-core;
+		fastcgi_pass     unix:/run/fcgiwrap.socket;
+		fastcgi_param    PATH_INFO    $uri;
+		fastcgi_param    QUERY_STRING $args;
+		fastcgi_param    HTTP_HOST    $server_name;
+		fastcgi_param   GIT_HTTP_EXPORT_ALL   "";
+		fastcgi_param   GIT_PROJECT_ROOT   /srv/git;
+		if ($arg_service = git-receive-pack) {
+			rewrite (/.*) /git_write/$1 last;
+		}
+		if ($uri ~ ^/.*/git-receive-pack$) {
+			rewrite (/.*) /git_write/$1 last;
+		}
+		if ($arg_service = git-upload-pack) {
+			rewrite (/.*) /git_read/$1 last;
+		}
+		if ($uri ~ ^/.*/git-upload-pack$) {
+			rewrite (/.*) /git_read/$1 last;
+		}
+	}

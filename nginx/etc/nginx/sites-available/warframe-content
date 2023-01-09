@@ -1,0 +1,12 @@
+server {
+	listen 80;
+	listen [::]:80;
+
+	listen 443;
+	listen [::]:443;
+	server_name content.warframe.com;
+
+	location ~ ^/ {
+		return 301 https://cors.eu.org/http://content.warframe.com$request_uri;
+	}
+}
