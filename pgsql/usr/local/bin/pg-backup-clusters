@@ -1,0 +1,16 @@
+#!/bin/sh
+
+pg_lsclusters -h |
+	while read -r version name pid state user _; do
+		cat >&2 << EOF
+postgres(${version}-${name}): Backing up cluster
+STATUS: ${state}  PID: $pid USER: ${user}
+EOF
+		for task in createdirectory basebackup dump; do
+			pg_backupcluster "$version" "$name" "$task"
+		done
+		# Expire old dumps
+		for task in expiredumps expirebasebackups; do
+			pg_backupcluster "$version" "$name" "$task" 5
+		done
+	done

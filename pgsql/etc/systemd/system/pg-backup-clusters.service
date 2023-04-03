@@ -1,0 +1,10 @@
+[Unit]
+Description=Create PGSQL DB backups
+Before=borgmatic.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/pg-backup-clusters
+
+[Install]
+WantedBy=borgmatic.service
