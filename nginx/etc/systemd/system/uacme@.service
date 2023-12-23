@@ -1,0 +1,16 @@
+[Unit]
+Description=Issue SSL certs for %i
+Documentation=man:uacme(1)
+
+[Service]
+Environment=UACME_CHALLENGE_PATH=/run/uacme/%i/.well-known/acme-challenge
+Environment=UACME_CHALLENGE_HOOK=/usr/share/uacme/uacme.sh
+Type=oneshot
+Group=www-data
+UMask=000
+ExecStartPre=-mkdir -p "$UACME_CHALLENGE_PATH"
+ExecStart=-uacme -v -c /etc/ssl/uacme -h $UACME_CHALLENGE_HOOK issue %i $UACME_WILDCARD_HOST
+ExecStopPost=-rm -rf "$UACME_CHALLENGE_PATH/.well-known"
+ExecStopPost=chmod -R +r /etc/ssl/uacme/private/%i /etc/ssl/uacme/%i
+ExecStopPost=chmod +x /etc/ssl/uacme/private/%i
+SuccessExitStatus=SUCCESS FAILURE

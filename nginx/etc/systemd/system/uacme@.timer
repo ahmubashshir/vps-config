@@ -1,0 +1,11 @@
+[Unit]
+Description=Update SSL certs for %i monthly
+Documentation=man:uacme(1)
+
+[Timer]
+OnCalendar=*-*-1/16
+Persistent=true
+RandomizedDelaySec=30m
+
+[Install]
+WantedBy=timers.target
