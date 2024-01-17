@@ -1,0 +1,52 @@
+#!/bin/bash
+do_update()
+{
+	sudo nsupdate << EOF
+	server localhost
+	zone $1
+	update $2
+	send
+EOF
+}
+
+is_present()
+{
+	[[ -n "$(dig +short "$2.$1" CNAME @localhost)" ]]
+}
+
+do_help()
+{
+	echo "Unsupported invocation: ${*@Q}"
+	cat << EOF
+
+Usage:
+$1 add <zone> <subdomain> [target]
+$1 del <zone> <subdomain>
+EOF
+}
+
+do_add()
+{
+	if ! is_present "$1" "$2"; then
+		do_update "$1" "add $2.$1. $((30 * 60)) IN CNAME ${3:-$1}."
+	else
+		echo "$2: Already present in '$1' zone" >&2
+		return 1
+	fi
+}
+
+do_del()
+{
+	if is_present "$1" "$2"; then
+		do_update "$1" "del $2.$1. IN CNAME"
+	else
+		echo "$2: Not present in '$1' zone" >&2
+		return 1
+	fi
+}
+
+case "$1" in
+	add) do_add "$2" "$3" "$4" ;;
+	del) do_del "$2" "$3" ;;
+	*) do_help "${0##*/}" "$@" >&2 ;;
+esac
