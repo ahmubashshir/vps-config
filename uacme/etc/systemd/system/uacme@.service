@@ -6,7 +6,7 @@ Documentation=man:uacme(1)
 Environment=UACME_CHALLENGE_PATH=/run/uacme/%i/.well-known/acme-challenge
 Environment=UACME_CHALLENGE_HOOK=/usr/share/uacme/uacme.sh
 Type=oneshot
-Group=www-data
+Group=ssl-cert
 UMask=007
 ExecStartPre=-mkdir -p "$UACME_CHALLENGE_PATH"
 ExecStart=-uacme -v -c /etc/ssl/uacme -h $UACME_CHALLENGE_HOOK issue %i $UACME_WILDCARD_HOST
