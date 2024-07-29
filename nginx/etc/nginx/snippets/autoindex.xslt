@@ -14,20 +14,22 @@
 
   <html>
     <head>
-	<link   rel="stylesheet" href="/assets/autoindex.css" />
-	<script src="/assets/autoindex.js"></script>
-	<script src="https://kit.fontawesome.com/55eb9c16a8.js"></script>
+	<link   rel="preload" as="style" href="https://www.nerdfonts.com/assets/css/webfont.css" />
+	<link   rel="preload" as="style" href="/assets/autoindex.css" />
+	<link   rel="stylesheet" priority="high" blocking="render" href="https://www.nerdfonts.com/assets/css/webfont.css" />
+	<link   rel="stylesheet" priority="high" blocking="render" href="/assets/autoindex.css" />
+	<!--script async="true" blocking="render"               src="/assets/autoindex.js" ></script-->
     </head>
     <body>
       <div id="progresswin">
         <progress id="progressbar"></progress>
       </div>
       <div id="droparea">
-	      <nav id="breadcrumbs"><ul><li><a href="/"><i class="fa fa-home"></i></a></li></ul></nav>
+	      <nav id="breadcrumbs"><ul><li><a href="/"><i class="nf nf-cod-home"></i></a></li></ul></nav>
 	      <table id="contents">
 	        <tbody>
 	            <tr class="directory go-up">
-	              <td class="icon"><a href="../"><i class="fa fa-arrow-up"></i></a></td>
+	              <td class="icon"><a href="../"><i class="nf nf-fa-arrow_up"></i></a></td>
 	              <td class="name"><a href="../">..</a></td>
 	              <td class="size"><a href="../"></a></td>
 	              <td class="mtime"><a href="../"></a></td>
@@ -41,7 +43,7 @@
 
 	          <xsl:for-each select="directory">
 	            <tr class="directory">
-	              <td class="icon"><a href="{.}/"><i class="fa fa-folder"></i></a></td>
+	              <td class="icon"><a href="{.}/"><i class="nf nf-fa-folder"></i></a></td>
 	              <td class="name"><a href="{.}/"><xsl:value-of select="." /></a></td>
 	              <td class="size"><a href="{.}/"></a></td>
 	              <td class="mtime"><a href="{.}/"><xsl:value-of select="./@mtime" /></a></td>
@@ -57,13 +59,13 @@
 
 	          <xsl:for-each select="file">
 	            <tr class="file">
-	              <td class="icon"><a href="{.}" download="{.}"><i class="fa fa-file"></i></a></td>
+	              <td class="icon"><a href="{.}" download="{.}"><i class="nf nf-fa-file"></i></a></td>
 	              <td class="name"><a href="{.}" download="{.}"><xsl:value-of select="." /></a></td>
 	              <td class="size"><a href="{.}" download="{.}"><xsl:value-of select="./@size" /></a></td>
 	              <td class="mtime"><a href="{.}" download="{.}"><xsl:value-of select="./@mtime" /></a></td>
                       <td class="actions">
 			<ul>
-				<li><a href="{.}" data-action="delete" class="fa fa-trash"></a></li>
+				<li><a href="{.}" data-action="delete" class="nf nf-fa-trash"></a></li>
 			</ul>
 		      </td>
 	            </tr>
